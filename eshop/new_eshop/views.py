@@ -12,7 +12,7 @@ from .serializers import (AttributeNameSerializer, AttributeValueSerializer, Att
                           ProductSerializer, CatalogSerializer, ProductImageSerializer, ProductAttributesSerializer)
 import logging
 
-# Create a logger
+# A logger for possible monitoring of the error with catalog in the admin panel
 logger = logging.getLogger(__name__)
 
 

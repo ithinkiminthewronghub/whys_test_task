@@ -1,3 +1,9 @@
+"""
+I am sorry for not implementing admin earlier.
+In the projects that I was doing admin panel was forbidden,
+because it would make the task easier.
+"""
+
 from django.contrib import admin
 
 # Register your models here.
