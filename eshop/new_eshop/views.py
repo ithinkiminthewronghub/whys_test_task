@@ -96,13 +96,15 @@ class ImportView(APIView):
 
                 elif model_name == 'Catalog':
                     # Special case for Catalog to handle many-to-many relationships
-                    product_ids = model_data.pop('products_ids', [])
+                    products_ids = model_data.pop('products_ids', [])
                     attributes_ids = model_data.pop('attributes_ids', [])
                     # Retrieve or create the Catalog instance
                     catalog_instance, created = model.objects.get_or_create(id=model_data.get('id'),
                                                                             defaults=model_data)
                     # Set products_ids
-                    catalog_instance.products_ids.set(product_ids)
+                    # catalog_instance.products_ids.set(products_ids)
+                    if products_ids:
+                        catalog_instance.products_ids.set(products_ids)
                     # If attributes_ids were provided, set them
                     # Otherwise, keep existing attributes_ids
                     if attributes_ids:
