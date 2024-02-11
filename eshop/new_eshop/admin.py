@@ -45,7 +45,11 @@ class ProductImageAdmin(admin.ModelAdmin):
     list_display = ['product', 'nazev', 'obrazek_id']
 
 
+# For some reason, there is an error when trying to get Catalogs in admin panel
+# TypeError at /admin/new_eshop/catalog/
+# __str__ returned non-string (type NoneType)
+# Even though __str__ returns the correct name
 @admin.register(Catalog)
 class CatalogAdmin(admin.ModelAdmin):
     list_display = ['nazev', 'obrazek']
-    filter_horizontal = ['products', 'attributes']
+

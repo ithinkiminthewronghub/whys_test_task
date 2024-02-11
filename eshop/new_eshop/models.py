@@ -17,6 +17,7 @@ class AttributeName(models.Model):
         return self.nazev
 
 
+# Model for AttributeValue
 class AttributeValue(models.Model):
 
     hodnota = models.CharField(max_length=255)
@@ -25,15 +26,17 @@ class AttributeValue(models.Model):
         return self.hodnota
 
 
+# Model for Attribute
 class Attribute(models.Model):
-
-    nazev_atributu = models.ForeignKey(AttributeName, on_delete=models.CASCADE)
-    hodnota_atributu = models.ForeignKey(AttributeValue, on_delete=models.CASCADE)
+    # Using foreign key to exploit the connection between models
+    nazev_atributu = models.ForeignKey(AttributeName, on_delete=models.CASCADE, blank=True, null=True)
+    hodnota_atributu = models.ForeignKey(AttributeValue, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return f"{self.nazev_atributu}: {self.hodnota_atributu}"
 
 
+# Model for Product
 class Product(models.Model):
 
     nazev = models.CharField(max_length=255)
@@ -47,12 +50,14 @@ class Product(models.Model):
         return self.nazev
 
 
+# Model for ProductAttributes
 class ProductAttributes(models.Model):
 
     attribute = models.ForeignKey(Attribute, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
 
+# Model for Image
 class Image(models.Model):
 
     nazev = models.CharField(max_length=255, blank=True, null=True)
@@ -62,22 +67,29 @@ class Image(models.Model):
         return self.nazev
 
 
+# Model for ProductImage
 class ProductImage(models.Model):
-
+    # Id of a product as a foreign key
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     obrazek_id = models.IntegerField()
     nazev = models.CharField(max_length=255)
 
     def __str__(self):
+
         return self.nazev
 
 
+# Model for Catalog
 class Catalog(models.Model):
 
     nazev = models.CharField(max_length=255)
     obrazek = models.ForeignKey(Image, on_delete=models.CASCADE)
-    products = models.ManyToManyField(Product)
-    attributes = models.ManyToManyField(Attribute)
+    # Implementing many-to-many relations
+    # In one catalog many products and attributes can be shown
+    products_ids = models.ManyToManyField(Product)
+    attributes_ids = models.ManyToManyField(Attribute)
 
     def __str__(self):
-        return self.nazev
+
+        print("Name of the Catalog:", self.nazev)
+        return self.nazev if self.nazev else "Unnamed Catalog"
