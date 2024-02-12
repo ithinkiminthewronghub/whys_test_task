@@ -15,7 +15,7 @@ class AttributeName(models.Model):
 
     def __str__(self):
 
-        return str(self.nazev)
+        return self.nazev
 
 
 # Model for AttributeValue
@@ -24,7 +24,7 @@ class AttributeValue(models.Model):
     hodnota = models.CharField(max_length=255)
 
     def __str__(self):
-        return str(self.hodnota)
+        return self.hodnota
 
 
 # Model for Attribute
@@ -35,7 +35,7 @@ class Attribute(models.Model):
 
     def __str__(self):
 
-        return str(f"{self.nazev_atributu}: {self.hodnota_atributu}")
+        return f"{self.nazev_atributu}: {self.hodnota_atributu}"
 
 
 # Model for Product
@@ -49,7 +49,7 @@ class Product(models.Model):
     is_published = models.BooleanField()
 
     def __str__(self):
-        return str(self.nazev)
+        return self.nazev
 
 
 # Model for ProductAttributes
@@ -81,7 +81,7 @@ class ProductImage(models.Model):
 
     def __str__(self):
 
-        return str(self.nazev)
+        return self.nazev
 
 
 # Model for Catalog
@@ -95,5 +95,5 @@ class Catalog(models.Model):
     attributes_ids = models.ManyToManyField(Attribute, related_name='catalogs')
 
     def __str__(self):
-        return str(self.nazev)
+        return self.nazev
 
