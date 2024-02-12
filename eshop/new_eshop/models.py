@@ -14,7 +14,8 @@ class AttributeName(models.Model):
     zobrazit = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.nazev
+
+        return str(self.nazev)
 
 
 # Model for AttributeValue
@@ -23,7 +24,7 @@ class AttributeValue(models.Model):
     hodnota = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.hodnota
+        return str(self.hodnota)
 
 
 # Model for Attribute
@@ -33,7 +34,8 @@ class Attribute(models.Model):
     hodnota_atributu = models.ForeignKey(AttributeValue, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return f"{self.nazev_atributu}: {self.hodnota_atributu}"
+
+        return str(f"{self.nazev_atributu}: {self.hodnota_atributu}")
 
 
 # Model for Product
@@ -47,7 +49,7 @@ class Product(models.Model):
     is_published = models.BooleanField()
 
     def __str__(self):
-        return self.nazev
+        return str(self.nazev)
 
 
 # Model for ProductAttributes
@@ -64,7 +66,10 @@ class Image(models.Model):
     obrazek = models.URLField()
 
     def __str__(self):
-        return self.nazev
+        if self.obrazek:
+            return str(self.nazev)
+        elif self.obrazek:
+            return str(self.obrazek)
 
 
 # Model for ProductImage
@@ -76,20 +81,19 @@ class ProductImage(models.Model):
 
     def __str__(self):
 
-        return self.nazev
+        return str(self.nazev)
 
 
 # Model for Catalog
 class Catalog(models.Model):
 
     nazev = models.CharField(max_length=255)
-    obrazek = models.ForeignKey(Image, on_delete=models.CASCADE)
+    obrazek_id = models.IntegerField()
     # Implementing many-to-many relations
     # In one catalog many products and attributes can be shown
-    products_ids = models.ManyToManyField(Product)
-    attributes_ids = models.ManyToManyField(Attribute)
+    products_ids = models.ManyToManyField(Product, related_name='catalogs')
+    attributes_ids = models.ManyToManyField(Attribute, related_name='catalogs')
 
     def __str__(self):
+        return str(self.nazev)
 
-        print("Name of the Catalog:", self.nazev)
-        return self.nazev if self.nazev else "Unnamed Catalog"
